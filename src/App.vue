@@ -28,14 +28,14 @@
 
       </div>
       <div class="header__right">
-        <div class="search">
+        <div class="search filter__mobil">
           <!-- Search Bar -->
           <label for="search">Search:</label>
           <input type="text" id="search" v-model="searchQuery" placeholder="Search by name" />
         </div>
 
         <!-- Sorting Dropdown -->
-        <div class="sorting">
+        <div class="sorting filter__mobil">
           <label for="sort">Sort by:</label>
           <select id="sort" v-model="sortOption">
             <option value="default">Default</option>
@@ -180,6 +180,7 @@ const filteredProducts = computed(() => {
 
   .filter__category,
   .filter__mobil {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
