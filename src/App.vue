@@ -4,13 +4,7 @@
     <section class="product__header">
       <!-- Filter Bar -->
       <div class="filter__bar">
-        <div class="filter__category">
-          <label for="category">Category:</label>
-          <select id="category" v-model="selectedCategory">
-            <option value="All">All</option>
-            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-          </select>
-        </div>
+
 
         <div class="filter__price">
           <!-- Price Range Filters -->
@@ -44,6 +38,19 @@
             <option value="name-asc">Name: A–Z</option>
             <option value="name-desc">Name: Z–A</option>
           </select>
+        </div>
+      </div>
+
+      <div class="filter__category">
+        <label for="category"></label>
+        <div class="category-buttons">
+          <button :class="{ 'active': selectedCategory === 'All' }" @click="selectedCategory = 'All'">
+            All
+          </button>
+          <button v-for="cat in categories" :key="cat" :class="{ 'active': selectedCategory === cat }"
+            @click="selectedCategory = cat">
+            {{ cat }}
+          </button>
         </div>
       </div>
 
@@ -111,6 +118,42 @@ const filteredProducts = computed(() => {
   margin: auto;
   padding: 0;
 }
+
+.filter__category {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-buttons button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.category-buttons button.active {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.category-buttons button:hover {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
 
 .product__catalog {
   max-width: 1150px;
