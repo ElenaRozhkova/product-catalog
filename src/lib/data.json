@@ -4,7 +4,7 @@
         "name": "Laptop",
         "price": 99,
         "category": "Electronics",
-        "image": "../../public/images/image.webp"
+        "image": "image.webp"
     },
     {
         "id": 2,
