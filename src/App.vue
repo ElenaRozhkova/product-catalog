@@ -14,12 +14,13 @@
 
         <div class="filter__price">
           <!-- Price Range Filters -->
-          <div>
+          <div class="filter__mobil">
             <label for="minPrice">Min Price:</label>
             <input type="number" id="minPrice" v-model.number="minPrice" placeholder="0" min="0" />
           </div>
 
-          <div> <label for="maxPrice">Max Price:</label>
+          <div class="filter__mobil">
+            <label for="maxPrice">Max Price:</label>
             <input type="number" id="maxPrice" v-model.number="maxPrice" placeholder="1000" min="0" />
           </div>
 
@@ -99,7 +100,7 @@ const filteredProducts = computed(() => {
       result.sort((a, b) => b.name.localeCompare(a.name))
       break
   }
-
+  console.log(result)
   return result
 })
 </script>
@@ -108,6 +109,7 @@ const filteredProducts = computed(() => {
   display: flex;
   align-items: center;
   margin: auto;
+  padding: 0;
 }
 
 .product__catalog {
@@ -117,17 +119,23 @@ const filteredProducts = computed(() => {
 }
 
 .product__header {
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
+  background-color: white;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .header__right {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
@@ -135,8 +143,8 @@ const filteredProducts = computed(() => {
 
 .filter__bar {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: column;
   gap: 10px;
 }
@@ -166,5 +174,16 @@ const filteredProducts = computed(() => {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+@media (max-width: 625px) {
+
+  .filter__category,
+  .filter__mobil {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+  }
 }
 </style>

@@ -21,7 +21,7 @@
         "image": "../../public/images/image.webp"
     },
     {
-        "id": 5,
+        "id": 4,
         "name": "Frontend",
         "price": 99,
         "category": "Books",
