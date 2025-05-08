@@ -5,7 +5,6 @@
       <!-- Filter Bar -->
       <div class="filter__bar">
 
-
         <div class="filter__price">
           <!-- Price Range Filters -->
           <div class="filter__mobil">
@@ -56,32 +55,44 @@
 
     </section>
 
-
-
     <!-- Products Grid -->
     <section class="card-grid">
-      <ProductCard v-for="item in filteredProducts" :key="item.id" :product="item" />
+      <ProductCard v-for="item in visibleProducts" :key="item.id" :product="item" />
     </section>
+
+    <!-- Load More Button -->
+    <div class="load-more-container">
+      <button @click="loadMore" v-if="hasMore && !loading" :disabled="loading">
+        <span v-if="loading">Loading...</span>
+        <span v-else>Load More</span>
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
-
+import load_more_count from './lib/constants.js'
 import ProductCard from './components/ProductCard.vue'
 import products from './lib/data.json'
 
-
+console.log(load_more_count)
 // Filters
 const selectedCategory = ref('All')
 const minPrice = ref(null)
 const maxPrice = ref(null)
 const searchQuery = ref('') // Search input
 const sortOption = ref('default')
-
+const visibleCount = ref(load_more_count)  // Количество товаров, которые показываются изначально
+const loading = ref(false) // Флаг для проверки загрузки
 const categories = [...new Set(products.map(p => p.category))]
 
-// Apply category, price, search, and sorting filters
+// Проверка, есть ли еще товары для загрузки
+const hasMore = computed(() => {
+  return visibleCount.value < filteredProducts.value.length
+})
+
+// Применение фильтров
 const filteredProducts = computed(() => {
   let result = products.filter(product => {
     const inCategory = selectedCategory.value === 'All' || product.category === selectedCategory.value
@@ -92,7 +103,7 @@ const filteredProducts = computed(() => {
     return inCategory && aboveMin && belowMax && matchesSearch
   })
 
-  // Apply sorting
+  // Применение сортировки
   switch (sortOption.value) {
     case 'price-asc':
       result.sort((a, b) => a.price - b.price)
@@ -107,10 +118,24 @@ const filteredProducts = computed(() => {
       result.sort((a, b) => b.name.localeCompare(a.name))
       break
   }
-  console.log(result)
   return result
 })
+
+// Список товаров, которые должны быть видны
+const visibleProducts = computed(() => {
+  return filteredProducts.value.slice(0, visibleCount.value)
+})
+
+// Метод загрузки новых товаров
+const loadMore = () => {
+  loading.value = true
+  setTimeout(() => {
+    visibleCount.value += load_more_count  // Увеличиваем количество отображаемых товаров на 6
+    loading.value = false
+  }, 500)  // Симуляция задержки для демонстрации
+}
 </script>
+
 <style scoped>
 #app {
   display: flex;
@@ -228,5 +253,27 @@ const filteredProducts = computed(() => {
     justify-content: center;
     width: 100%;
   }
+}
+
+.load-more-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.load-more-container button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  /* Зелёный */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.load-more-container button:hover {
+  background-color: #218838;
+  /* Тёмно-зелёный на hover */
 }
 </style>
