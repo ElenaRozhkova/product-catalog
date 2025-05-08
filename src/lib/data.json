@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Laptop",
+        "price": 99,
+        "category": "Electronics",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 2,
+        "name": "T-shirt",
+        "price": 20,
+        "category": "Clothing",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 3,
+        "name": "Backend",
+        "price": 10,
+        "category": "Books",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 5,
+        "name": "Frontend",
+        "price": 99,
+        "category": "Books",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 5,
+        "name": "Frontend",
+        "price": 99,
+        "category": "Books",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 6,
+        "name": "Frontend",
+        "price": 99,
+        "category": "Books",
+        "image": "../../public/images/image.webp"
+    },
+    {
+        "id": 7,
+        "name": "Frontend",
+        "price": 99,
+        "category": "Books",
+        "image": "../../public/images/image.webp"
+    }
+]
