@@ -43,13 +43,24 @@
       <div class="filter__category">
         <label for="category"></label>
         <div class="category-buttons">
-          <button :class="{ 'active': selectedCategory === 'All' }" @click="selectedCategory = 'All'">
-            All
-          </button>
-          <button v-for="cat in categories" :key="cat" :class="{ 'active': selectedCategory === cat }"
-            @click="selectedCategory = cat">
-            {{ cat }}
-          </button>
+          <button
+          :class="{ 'active': selectedCategory === 'All' }"
+          role="tab"
+          :aria-selected="selectedCategory === 'All'"
+          @click="selectedCategory = 'All'"
+        >
+          All
+        </button>
+          <button
+          v-for="cat in categories"
+          :key="cat"
+          :class="{ 'active': selectedCategory === cat }"
+          role="tab"
+          :aria-selected="selectedCategory === cat"
+          @click="selectedCategory = cat"
+        >
+          {{ cat }}
+        </button>
         </div>
       </div>
 
@@ -62,7 +73,7 @@
 
     <!-- Load More Button -->
     <div class="load-more-container">
-      <button @click="loadMore" v-if="hasMore && !loading" :disabled="loading">
+      <button @click="loadMore"   role="tab" v-if="hasMore && !loading" :disabled="loading">
         <span v-if="loading">Loading...</span>
         <span v-else>Load More</span>
       </button>
@@ -96,11 +107,15 @@ const hasMore = computed(() => {
 const filteredProducts = computed(() => {
   let result = products.filter(product => {
     const inCategory = selectedCategory.value === 'All' || product.category === selectedCategory.value
-    const aboveMin = minPrice.value == null || product.price >= minPrice.value
-    const belowMax = maxPrice.value == null || product.price <= maxPrice.value
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) // Search filter
 
-    return inCategory && aboveMin && belowMax && matchesSearch
+    const min = minPrice.value !== null && minPrice.value !== '' ? minPrice.value : -Infinity
+    const max = maxPrice.value !== null && maxPrice.value !== '' ? maxPrice.value : Infinity
+
+    const inPriceRange = product.price >= min && product.price <= max
+
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+
+    return inCategory && inPriceRange && matchesSearch
   })
 
   // Применение сортировки
